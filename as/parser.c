@@ -1,9 +1,9 @@
 #include "parser.h"
 
 static int parser_readarg(char *lineBuffer, int letterSkip) {
-    strcpy(sCurrentArgument, lineBuffer+letterSkip);
+    strcpy(sCurrentArgument, lineBuffer + letterSkip);
     char argInt = atoi(sCurrentArgument);
-    if (argInt > 0b00001111) { // binary format doesn't allow for arguments larger than 0b1111 (15)
+    if (argInt > 0b00001111) { // Binary format doesn't allow for arguments larger than 0b1111 (15)
         fprintf(stderr, "WARNING: The supplied argument is larger than 15 (Line: %lld)\n", sCurrentLine);
         argInt = 0;
     }
@@ -18,16 +18,16 @@ static int parser_readarg(char *lineBuffer, int letterSkip) {
 }
 
 void parser_init() {
-    // todo
+    // TODO
 }
 
 static void parser_handle_ops(char *lineBuffer, FILE *outputFile) {
     if (strcmp(lineBuffer, "") == 0) {
-        // skip empty lines
+        // Skip empty lines
         return;
     } 
     else if (lineBuffer[0] == '#') {
-        // skip comments
+        // Skip comments
         return;
     }
     else if (strcmp(lineBuffer, "STOP") == 0) {
@@ -68,7 +68,7 @@ static void parser_handle_ops(char *lineBuffer, FILE *outputFile) {
     } 
     else if (strcmp(lineBuffer, "CMPAB") == 0) {
         sCurrentMC.opcode = OP_INCB;
-        sCurrentMC.argument = 0b1111; // hack
+        sCurrentMC.argument = 0b1111; // Hack
     }
     else if (strncmp(lineBuffer, "CMPA", strlen("CMPA")) == 0) {
         sCurrentMC.opcode = OP_CMPA;
@@ -100,7 +100,7 @@ static void parser_handle_ops(char *lineBuffer, FILE *outputFile) {
     } 
     else if (strcmp(lineBuffer, "DMP") == 0) {
         sCurrentMC.opcode = OP_NOP;
-        sCurrentMC.argument = 0b1111; // hack
+        sCurrentMC.argument = 0b1111; // Hack
     } 
 
     else {
@@ -112,13 +112,11 @@ static void parser_handle_ops(char *lineBuffer, FILE *outputFile) {
 }
 
 int parser_parse(FILE *inputFile, FILE *outputFile) {
-    // read the input file
+    // Read the input file
     while (fgets(sInFileLineBuffer, sizeof(sInFileLineBuffer), inputFile) != NULL) {
         sCurrentLine++;
-        //printf(sInFileLineBuffer);
-        //puts("========================\n");
-        
-        // remove the newline
+
+        // Remove the newline
         int lineBufLen = strlen(sInFileLineBuffer) - 1;
         if (sInFileLineBuffer[lineBufLen] == '\n') {
             sInFileLineBuffer[lineBufLen] = '\0'; 

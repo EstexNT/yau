@@ -7,7 +7,7 @@
 #include "mcformat.h"
 
 
-// opcodes commented out are the ones that abuse the no-arguments instructions
+// Opcodes commented out are the ones that abuse the no-arguments instructions
 enum AsmOpcodes {
     OP_STOP = 0, // STOP
     OP_MOVA,     // MOVA X
